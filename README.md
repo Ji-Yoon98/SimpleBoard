@@ -8,7 +8,7 @@ Spring boot + React 심플한 게시판
 1. [제작기간 및 참여인원](#-제작기간-및-참여인원)
 2. [기술스택](#-기술스택)
 3. [ERD](#%EF%B8%8F-erd)
-4. [화면구성 및 기능](#%EF%B8%8F-화면구성-및-기능)
+4. [화면구성 및 기능](#-화면구성-및-기능)
 5. [트러블 슈팅](#-트러블-슈팅)
 
 <br>
@@ -76,7 +76,7 @@ Spring boot + React 심플한 게시판
 
 # ⚙️ ERD
 
-<img src="imges/ERD.png" width="1000"/>
+<img src="imges/ERD.png" width="800"/>
 
 <br>
 
@@ -185,7 +185,9 @@ Spring boot + React 심플한 게시판
 
 - **게시판 목록**
   - 로그인을 한 경우 header에 로그아웃 icon이 보임
-  - 게시글은 10개까지만 한 페이지에 나옴
+  - 한 페이지에 게시글 10개 까지 보임
+  - 페이지네이션은 5페이지까지 나옴
+  - 이전 다음 클릭시 5페이지씩 이동 (1페이지 -> 6페이지로 이동)
   - 파일이 첨부된 게시물은 제목 뒤에 파일 icon이 포함되서 보임
   - 번호, 작성일, 조회수 순으로 정렬 가능 (default - 작성일)
   - 뒤로 버튼 누르면 메인페이지로 이동
@@ -200,6 +202,58 @@ Spring boot + React 심플한 게시판
 - **검색**
   - 전체, 제목, 작성자, 내용 카테고리 및 검색어로 검색 
   
+<br><br>
+
+### 글쓰기 / 상세보기 / 수정
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center;">글쓰기</th>
+      <th style="text-align: center;">상세보기</th>
+      <th style="text-align: center;">수정</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a href="imges/write.png" target="_blank">
+          <img width="329" src="imges/write.png" style="max-width: 100%;">
+        </a>
+      </td>
+      <td align="center">
+        <a href="imges/boardDetail.png" target="_blank">
+          <img width="329" src="imges/boardDetail.png" style="max-width: 100%;">
+        </a>
+      </td>
+      <td align="center">
+        <a href="imges/update.png" target="_blank">
+          <img width="329" src="imges/update.png" style="max-width: 100%;">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+- **글쓰기**
+  - 로그인한 회원만 쓸 수 있음
+  - 제목은 20자로 제한, 내용은 255자로 제한
+  - 실시간으로 글자수 개수를 표시
+  - jpg, png 등 이미지 파일만 등록이 가능 (다른 파일 업로드 시 경고창)
+  - 파일은 5개까지만 등록이 가능 (최대 파일 용량을 넘기면 경고창: 10MB)
+  - 등록할 파일을 미리보기로 보여줌 (미리보기 이미지 x 버튼 클릭하면 삭제)
+
+- **상세보기**
+  - 제목과 내용이 보임
+  - 내용 안에 내가 첨부한 이미지 파일들이 나옴
+  - ▲ 다음 글, ▼ 이전 글로 이동 
+  - 내가 쓴 글이면 하단에 수정, 삭제 버튼이 보임
+  - 수정 버튼 클릭 시 수정 페이지로 이동
+  - 삭제 버튼 클릭 시 삭제 확인 alert창 뜨고 확인 누르면 삭제됨
+ 
+- **수정**
+  - 제목, 내용, 첨부된 파일이 나옴
+  - 다시 파일 선택 시 기존에 첨부된 파일 + 새로 추가한 파일이 미리보기로 나옴
+ 
 <br><br>
 
   
