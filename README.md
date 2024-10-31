@@ -261,3 +261,79 @@ Spring boot + React 심플한 게시판
 [목차🔺](#-목차)
 <br><br>
 
+
+# 💊 트러블 슈팅
+
+<details>
+
+<summary>Security 세션 로그인 시 React에서의 로그인 유지 안됌</summary>
+<br>
+
+Security를 통한 세션 로그인 시 React에서 새로고침이나 페이지 이동 시 초기화되어 로그인 상태가 유지되지 않는 문제가 발생함
+
+```java
+public class SecurityConfig {
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		
+		http.csrf((auth) -> auth.disable());
+		
+		http.cors((cors) -> cors.configurationSource(corsConfigurationSource()));
+
+	    // From 로그인 방식
+	    http.formLogin((auth) -> auth
+	    		.loginPage("/login")
+	    		.defaultSuccessUrl("/loginOk")
+	    		.failureHandler(customFailureHandler)
+	    		.permitAll());
+	    
+	    // 로그아웃
+	    http.logout((logout) -> logout
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/logoutOk")
+				.deleteCookies("JSESSIONID"));
+
+	
+	    // HTTP Basic 인증 방식 disable
+	    http.httpBasic((auth) -> auth.disable());
+	
+		// 경로별 인가 작업(일단 전체 열어둠)
+		http.authorizeHttpRequests((auth) -> auth
+				.requestMatchers("/**").permitAll()
+				.anyRequest().authenticated());
+		
+	
+		return http.build();
+	}
+	
+}
+
+```
+
+```java
+// 시큐리티 로그인 성공 -> 로그인 한 유저 값 넘김
+@GetMapping("/loginOk")
+public ResponseEntity<Map<String, String>> loginOk() {
+  String username = userService.getUsername();
+
+  System.out.println("로그인한 유저:" + username);
+
+  Map<String, String> userInfo = new HashMap<>();
+  userInfo.put("username", username);
+
+  return ResponseEntity.ok(userInfo);
+}
+```
+
+- SecurityConfig에서 defaultSuccessUrl을 "/loginOk"로 줌 (defaultSuccessUrl = 로그인 성공 시 이동할 경로)
+- 컨트롤러에서 loginOk라는 경로로 로그인한 유저의 정보를 넘겨줌
+
+</br></br>  
+
+</details>
+
+
+
+[목차🔺](#-목차)
+
