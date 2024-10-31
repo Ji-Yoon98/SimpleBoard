@@ -1,5 +1,9 @@
-npm i
+## React 실행하기
 
-npm ci
+http://localhost:3000
+
+```
+npm install
 
 npm start
+```
